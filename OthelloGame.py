@@ -8,18 +8,36 @@ from sympy import false, primefactors, true
 class Player:
     def __init__(self, tokenColor):
         self.tokenColor = tokenColor
+    
+    def do_a_movement(self, game, playerInput):
+        movementAllowed = game.do_player_turn(self, playerInput)
+        if(movementAllowed == False):
+            print("Not a valid movement!")
+
 
 class Game:
     def __init__(self, board):
         self.boardAnalyzer = BoardAnalyzer(board)
         self.board = board
     
+    def get_player_score(self, player):
+        playerScore = self.boardAnalyzer.get_quantity_tokens(player.tokenColor)
+        return playerScore
+    
+    def copy(self):
+        copyGame = Game(self.board.copy())
+        return copyGame
+
     def initializate_default_game(self):
         self.board.place_token(3, 3, "white")
         self.board.place_token(4, 4, "white")
         self.board.place_token(4, 3, "black")
         self.board.place_token(3, 4, "black")
     
+    def terminal_test(self, player):
+        possibleActions = self.define_posible_actions(player)
+        return len(possibleActions) == 0
+
     def define_posible_actions(self, player):
         possibleActions = self.boardAnalyzer.get_possible_actions(player.tokenColor)
         return possibleActions
@@ -29,7 +47,6 @@ class Game:
         cellAction = matrixOfCells[action[1]][action[0]]
         possibleActions = self.define_posible_actions(player)
         if(cellAction not in possibleActions):
-            print("Not a valid movement!")
             return false
         self.board.place_token(action[0], action[1], player.tokenColor)
         self.boardAnalyzer.change_board(self.board)
@@ -50,6 +67,16 @@ class BoardAnalyzer:
 
     def change_board(self, board):
         self.board = board
+    
+    def get_quantity_tokens(self, tokenColor):
+        matrixOfCells = self.board.cells
+        tokenCells = []
+        for list in matrixOfCells:
+            for cell in list:
+                if (cell.contains == tokenColor):
+                    tokenCells.append(cell)
+        return len(tokenCells)
+
     
     def check_limit_constrains(self, posX, posY):
         limitConstrainsInX = (posX >= 0) and (posX < self.board.size)
@@ -148,7 +175,7 @@ class Board:
     def __init__(self, size=8):
         self.cells = []
         self.size = size
-    
+
     def __str__(self):
         table = ""
         for row in self.cells:
@@ -157,6 +184,11 @@ class Board:
             table = table + "\n"
         return table
     
+    def copy(self):
+        copyBoard = Board(self.size)
+        copyBoard.cells = self.cells
+        return copyBoard
+
     def initializate_board(self):
         for j in range(self.size):
             row = []
@@ -167,24 +199,3 @@ class Board:
     def place_token(self, posX, posY, token):
         cellToPlace = self.cells[posY][posX]
         cellToPlace.contains = token
-    
-
-board = Board(8)
-board.initializate_board()
-playerOne = Player("black")
-playerTwo = Player("white")
-game = Game(board)
-game.initializate_default_game()
-print(game.board_status())
-actions = game.define_posible_actions(playerOne)
-print([str(cell) for cell in actions])
-game.do_player_turn(playerOne,(3, 2))
-print(game.board_status())
-actions = game.define_posible_actions(playerTwo)
-print([str(cell) for cell in actions])
-game.do_player_turn(playerTwo,(2, 4))
-print(game.board_status())
-actions = game.define_posible_actions(playerOne)
-print([str(cell) for cell in actions])
-
-    
