@@ -166,13 +166,23 @@ class Cell:
         self.contains = contains
     
     def __str__(self):
+        numbToChar = {
+            1: 'A',
+            2: 'B',
+            3: 'C',
+            4: 'D',
+            5: 'E',
+            6: 'F',
+            7: 'G',
+            8: 'H'
+        }
         if(self.contains == None):
-            return f"  ({self.posX}, {self.posY})  "
+            return f"  ({numbToChar[self.posX + 1]}, {self.posY + 1})  "
         if(self.contains == "white"):
-            return colored(f"  ({self.posX}, {self.posY})  ","grey", "on_white", attrs=['bold'])
+            return colored(f"  ({numbToChar[self.posX + 1]}, {self.posY + 1})  ","grey", "on_white", attrs=['bold'])
         if(self.contains == "black"):
-            return colored(f"  ({self.posX}, {self.posY})  ","grey", attrs=['bold','reverse'])
-        return f"Cell ({self.posX}, {self.posY}) - {str(self.contains)}   "
+            return colored(f"  ({numbToChar[self.posX + 1]}, {self.posY + 1})  ","grey", attrs=['bold','reverse'])
+        return f"Cell ({numbToChar[self.posX + 1]}, {self.posY + 1}) - {str(self.contains)}   "
     
     def copy(self):
         copyCell = Cell(self.posX, self.posY, self.contains)
