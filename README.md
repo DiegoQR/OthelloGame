@@ -14,7 +14,7 @@ With this heuristic we want to take into account both the number of black and wh
 
 
 
-####--- Experiments carried out ----
+#### --- Experiments carried out ----
 Of 4 games
 
 Application of “utility_function_1” Human Player: 4 - Machine: 0 = Plays: (27-7),(29-9),(41-18),
@@ -23,7 +23,7 @@ Application of “utility_function_2” Human Player: 4 – Machine: 0 = Plays: 
 
 
 
-####--- Conclusions ---
+#### --- Conclusions ---
 Due to the fact that there are two simple heuristics and, the main thing, only a one-level state expansion is carried out, satisfactory results are not obtained. In all cases the human manages to beat the program.
 
 
