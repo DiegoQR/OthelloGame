@@ -14,8 +14,11 @@ With this heuristic we want to take into account both the number of black and wh
 
 --- Experiments carried out ----
 Of 4 games
+
 Application of “utility_function_1” Human Player: 4 - Machine: 0 = Plays: (27-7),(29-9),(41-18),
+
 Application of “utility_function_2” Human Player: 4 – Machine: 0 = Plays: (55-9),(41-21),(36-16),(28-8)
+
 
 
 --- Conclusions ---
