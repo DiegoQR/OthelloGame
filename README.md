@@ -23,4 +23,4 @@ Due to the fact that there are two simple heuristics and, the main thing, only a
 
 
 ---Installation guide---
-You have to run the program "IntelligentProgram2.py", and the interaction is done through the console.
+You have to run the program "IntelligentProgram.py", and the interaction is done through the console.
