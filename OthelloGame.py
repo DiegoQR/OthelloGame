@@ -13,12 +13,16 @@ class Player:
         movementAllowed = game.do_player_turn(self, playerInput)
         if(movementAllowed == False):
             print("Not a valid movement!")
+            return movementAllowed
 
 
 class Game:
     def __init__(self, board):
         self.boardAnalyzer = BoardAnalyzer(board)
         self.board = board
+    
+    def __str__(self):
+        return self.board_status()
     
     def get_player_score(self, player):
         playerScore = self.boardAnalyzer.get_quantity_tokens(player.tokenColor)
@@ -169,6 +173,10 @@ class Cell:
         if(self.contains == "black"):
             return colored(f"  ({self.posX}, {self.posY})  ","grey", attrs=['bold','reverse'])
         return f"Cell ({self.posX}, {self.posY}) - {str(self.contains)}   "
+    
+    def copy(self):
+        copyCell = Cell(self.posX, self.posY, self.contains)
+        return copyCell
 
 class Board:
 
@@ -186,7 +194,8 @@ class Board:
     
     def copy(self):
         copyBoard = Board(self.size)
-        copyBoard.cells = self.cells
+        for row in self.cells:
+            copyBoard.cells.append([cell.copy() for cell in row])
         return copyBoard
 
     def initializate_board(self):
